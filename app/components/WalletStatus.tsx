@@ -5,6 +5,8 @@ import { useAccount, useDisconnect } from 'wagmi';
 import { useFrameContext } from './FrameProvider';
 import { Copy, LogOut, ChevronDown } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { Name } from '@coinbase/onchainkit/identity';
+import { base } from 'viem/chains';
 
 export function WalletAddress() {
   const { address, isConnected } = useAccount();
@@ -30,6 +32,8 @@ export function WalletAddress() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // OnchainKit Name component handles basename resolution automatically
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
@@ -81,7 +85,13 @@ export function WalletAddress() {
           className='flex items-center gap-2 bg-card border border-border rounded-xl px-3 py-2 text-sm font-medium text-foreground hover:bg-muted/50 transition-all duration-200 shadow-sm'
         >
           <div className='w-2 h-2 bg-green-500 rounded-full'></div>
-          <span>{`${address.slice(0, 6)}...${address.slice(-4)}`}</span>
+          <span>
+            <Name 
+              address={address as `0x${string}`} 
+              chain={base}
+              onError={(error) => console.log('Name component error:', error)}
+            />
+          </span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           />

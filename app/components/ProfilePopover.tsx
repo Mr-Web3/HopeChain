@@ -155,92 +155,90 @@ export default function ProfilePopover() {
             onClick={e => e.stopPropagation()}
           >
             <div className='p-6'>
-              {/* Profile Photo - Top Center with Theme Toggle */}
-              <div className='flex items-center justify-center mb-4 gap-4'>
-                {/* Theme Toggle - Left of Profile Photo */}
-                <ThemeToggle />
+              {/* Header with Profile Photo and Theme Toggle */}
+              <div className='flex items-start justify-between mb-6'>
+                {/* Profile Photo */}
+                <div className='flex flex-col items-center'>
+                  {user.pfpUrl ? (
+                    <Image
+                      src={user.pfpUrl}
+                      alt='Profile'
+                      className='h-16 w-16 rounded-md object-cover shadow-lg'
+                      width={64}
+                      height={64}
+                    />
+                  ) : (
+                    <div className='h-16 w-16 rounded-md bg-muted shadow-lg' />
+                  )}
+                </div>
 
-                {/* Profile Photo - Center */}
-                {user.pfpUrl ? (
-                  <Image
-                    src={user.pfpUrl}
-                    alt='Profile'
-                    className='h-20 w-20 rounded-md object-cover'
-                    width={80}
-                    height={80}
-                  />
-                ) : (
-                  <div className='h-20 w-20 rounded-xl bg-muted' />
-                )}
-
-                {/* Spacer to balance the layout */}
-                <div className='w-9 h-9' />
+                {/* Theme Toggle - Top Right */}
+                <div className='flex items-center'>
+                  <ThemeToggle />
+                </div>
               </div>
 
-              {/* Username and FID */}
-              <div className='text-center mb-4'>
-                <div className='text-foreground font-semibold text-lg'>
+              {/* User Info Section */}
+              <div className='text-center mb-6'>
+                <div className='text-foreground font-semibold text-xl mb-1'>
                   {neynarProfile?.display_name ||
                     user.displayName ||
                     user.username ||
                     `FID ${user.fid}`}
                 </div>
                 {(user.username || user.fid) && (
-                  <div className='text-sm text-muted-foreground'>
+                  <div className='text-sm text-muted-foreground mb-2'>
                     {user.username ? `@${user.username}` : ''}
                     {user.username && user.fid ? ' · ' : ''}
                     {user.fid ? `fid ${user.fid}` : ''}
                   </div>
                 )}
-                {/* Location - Right below username and FID */}
+                {/* Location */}
                 {(user.location?.description ||
                   neynarProfile?.location?.description) && (
-                  <div className='text-xs text-muted-foreground mt-1'>
-                    {user.location?.description ||
+                  <div className='text-sm text-muted-foreground'>
+                    📍 {user.location?.description ||
                       neynarProfile?.location?.description}
                   </div>
                 )}
               </div>
 
-              {/* Following and Followers from Neynar */}
+              {/* Stats Section */}
               {neynarProfile && (
-                <div className='flex justify-center gap-8 mb-4'>
-                  <div className='text-center'>
-                    <div className='text-foreground font-semibold'>
-                      Following
+                <div className='bg-muted/30 rounded-lg p-4 mb-6'>
+                  <div className='flex justify-center gap-8'>
+                    <div className='text-center'>
+                      <div className='text-foreground font-semibold text-lg'>
+                        {neynarProfile.following_count?.toLocaleString() || '-'}
+                      </div>
+                      <div className='text-sm text-muted-foreground'>
+                        Following
+                      </div>
                     </div>
-                    <div className='text-sm text-muted-foreground'>
-                      {neynarProfile.following_count?.toLocaleString() || '-'}
-                    </div>
-                  </div>
-                  <div className='text-center'>
-                    <div className='text-foreground font-semibold'>
-                      Followers
-                    </div>
-                    <div className='text-sm text-muted-foreground'>
-                      {neynarProfile.follower_count?.toLocaleString() || '-'}
+                    <div className='text-center'>
+                      <div className='text-foreground font-semibold text-lg'>
+                        {neynarProfile.follower_count?.toLocaleString() || '-'}
+                      </div>
+                      <div className='text-sm text-muted-foreground'>
+                        Followers
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Bio */}
-              <div className='text-center mb-6'>
-                {(neynarProfile?.profile?.bio?.text || user.bio) && (
-                  <div className='text-sm text-muted-foreground'>
+              {/* Bio Section */}
+              {(neynarProfile?.profile?.bio?.text || user.bio) && (
+                <div className='bg-muted/20 rounded-lg p-4 mb-6'>
+                  <div className='text-sm text-foreground leading-relaxed'>
                     {neynarProfile?.profile?.bio?.text || user.bio}
                   </div>
-                )}
-                {!neynarProfile?.profile?.bio?.text && !user.bio && (
-                  <div className='text-sm text-muted-foreground'>
-                    No bio available
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* Social Links */}
               {neynarProfile?.social_verifications && (
-                <div className='flex justify-center gap-4 mb-4'>
+                <div className='flex justify-center gap-6'>
                   {neynarProfile.social_verifications.twitter && (
                     <button
                       onClick={() =>
@@ -248,9 +246,12 @@ export default function ProfilePopover() {
                           `https://twitter.com/${neynarProfile.social_verifications.twitter}`
                         )
                       }
-                      className='text-primary hover:text-primary/80 text-sm transition-colors'
+                      className='flex items-center gap-2 px-4 py-2 bg-blue-500/10 text-blue-500 rounded-lg hover:bg-blue-500/20 transition-colors'
                     >
-                      @{neynarProfile.social_verifications.twitter}
+                      <span className='text-sm'>🐦</span>
+                      <span className='text-sm font-medium'>
+                        @{neynarProfile.social_verifications.twitter}
+                      </span>
                     </button>
                   )}
                   {neynarProfile.social_verifications.github && (
@@ -260,9 +261,12 @@ export default function ProfilePopover() {
                           `https://github.com/${neynarProfile.social_verifications.github}`
                         )
                       }
-                      className='text-muted-foreground hover:text-foreground text-sm transition-colors'
+                      className='flex items-center gap-2 px-4 py-2 bg-gray-500/10 text-gray-500 rounded-lg hover:bg-gray-500/20 transition-colors'
                     >
-                      @{neynarProfile.social_verifications.github}
+                      <span className='text-sm'>🐙</span>
+                      <span className='text-sm font-medium'>
+                        @{neynarProfile.social_verifications.github}
+                      </span>
                     </button>
                   )}
                 </div>

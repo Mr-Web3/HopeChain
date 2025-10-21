@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: METADATA.name,
     description: METADATA.description,
-    metadataBase: new URL(METADATA.homeUrl),
+    metadataBase: new URL(METADATA.homeUrl || 'https://hope-chain-five.vercel.app'),
     keywords: [
       'base',
       'farcaster',
@@ -47,8 +47,8 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [minikitConfig.miniapp.ogImageUrl],
     },
     icons: {
-      icon: '/icon.png',
-      apple: '/icon.png',
+      icon: '/hopeLogo.png',
+      apple: '/hopeLogo.png',
     },
     other: {
       'fc:miniapp': JSON.stringify({

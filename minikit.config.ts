@@ -13,9 +13,9 @@ export const minikitConfig = {
   accountAssociation: {
     header:
       'eyJmaWQiOjc4ODgwMCwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDQzOTI5OEVmQUQzMEY2MjgyMWM4NWI2NUFkNzVlN0MwNDFlMzY2RDcifQ',
-    payload: 'eyJkb21haW4iOiJoZWxwLm5ncm9rLmRldiJ9',
+    payload: 'eyJkb21haW4iOiJob3BlLWNoYWluLWZpdmUudmVyY2VsLmFwcCJ9',
     signature:
-      'o5paU2Ch83/mOsGvrp0lXylO1XftZ9kekvJfWGC9/4BVJVF9mM4nICcBWLXjutFa5onIU3vmwi9Po9jr+m90Bxs=',
+      'awENQzWNfUYOBMHYCTlXo0j4xme35nqL/VSnXAbLZVpmnr9B+pNLacL5ugsoe+N19Brxg6FY63RHb35HqKhpwhw=',
   },
   baseBuilder: {
     allowedAddresses: ['0x1d0B2cfeBaBB59b3AF59ff77DeF5397Ce4Be9e77'],

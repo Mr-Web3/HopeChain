@@ -2,10 +2,10 @@
 
 import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { MiniKitProvider } from '@coinbase/onchainkit/minikit';
 import { ConditionalSafeArea } from './components/ConditionalSafeArea';
 import { ReactNode } from 'react';
-// import Provider from './components/providers/WagmiProvider';
 import FrameProvider from './components/FrameProvider';
 import { ThemeProvider } from './components/providers/ThemeProvider';
 import { config } from '../lib/unified-wagmi-config';
@@ -22,17 +22,19 @@ export function Providers({ children }: { children: ReactNode }) {
     >
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <MiniKitProvider
-            enabled={true}
-            notificationProxyUrl='/api/notify'
-            autoConnect={false}
-          >
-            <FrameProvider>
-              <ConditionalSafeArea isMiniKitEnabled={true}>
-                {children}
-              </ConditionalSafeArea>
-            </FrameProvider>
-          </MiniKitProvider>
+          <RainbowKitProvider>
+            <MiniKitProvider
+              enabled={true}
+              notificationProxyUrl='/api/notify'
+              autoConnect={false}
+            >
+              <FrameProvider>
+                <ConditionalSafeArea isMiniKitEnabled={true}>
+                  {children}
+                </ConditionalSafeArea>
+              </FrameProvider>
+            </MiniKitProvider>
+          </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
     </ThemeProvider>

@@ -11,7 +11,7 @@ import {
 // import { Heart, RefreshCw } from 'lucide-react'; // Not used directly in this file anymore
 import deployedContracts from '../../contracts/deployedContracts';
 import toast from 'react-hot-toast';
-import { createPublicClient, http, toCoinType } from 'viem';
+import { createPublicClient, http } from 'viem';
 import { baseSepolia } from 'viem/chains';
 
 // Import our new components
@@ -234,17 +234,8 @@ export default function DonatePage() {
               args: [donorAddress as `0x${string}`],
             })) as unknown as bigint;
 
-            // Try to get basename
-            let basename: string | undefined;
-            try {
-              const ensName = await viemClient.getEnsName({
-                address: donorAddress as `0x${string}`,
-                coinType: toCoinType(baseSepolia.id),
-              });
-              basename = ensName || undefined;
-            } catch (basenameError) {
-              console.log(`No basename for ${donorAddress}:`, basenameError);
-            }
+            // OnchainKit Name component will handle basename resolution in the UI
+            const basename = undefined; // Will be resolved by OnchainKit Name component
 
             return {
               address: donorAddress,

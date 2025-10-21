@@ -3,9 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, DollarSign, Users, FileText, User, Heart } from 'lucide-react';
-import { WalletConnect } from '../wallet/WalletConnect';
-import { DesktopWalletConnect } from '../wallet/DesktopWalletConnect';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { Name } from '@coinbase/onchainkit/identity';
+import { base } from 'viem/chains';
 
 const navigation = [
   { name: 'Home', href: '/', icon: Home },
@@ -14,6 +15,88 @@ const navigation = [
   { name: 'Apply', href: '/apply', icon: FileText },
   { name: 'Profile', href: '/profile', icon: User },
 ];
+
+// Custom ConnectButton component that shows basenames
+function CustomConnectButton() {
+
+  return (
+    <ConnectButton.Custom>
+      {({
+        account,
+        chain,
+        openAccountModal,
+        openChainModal,
+        openConnectModal,
+        authenticationStatus,
+        mounted,
+      }) => {
+        const ready = mounted && authenticationStatus !== 'loading';
+        const connected =
+          ready &&
+          account &&
+          chain &&
+          (!authenticationStatus ||
+            authenticationStatus === 'authenticated');
+
+        return (
+          <div
+            {...(!ready && {
+              'aria-hidden': true,
+              style: {
+                opacity: 0,
+                pointerEvents: 'none',
+                userSelect: 'none',
+              },
+            })}
+          >
+            {(() => {
+              if (!connected) {
+                return (
+                  <button
+                    onClick={openConnectModal}
+                    type='button'
+                    className='px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors'
+                  >
+                    Connect Wallet
+                  </button>
+                );
+              }
+
+              if (chain.unsupported) {
+                return (
+                  <button
+                    onClick={openChainModal}
+                    type='button'
+                    className='px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors'
+                  >
+                    Wrong network
+                  </button>
+                );
+              }
+
+              return (
+                <button
+                  onClick={openAccountModal}
+                  type='button'
+                  className='px-4 py-2 bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-colors flex items-center gap-2'
+                >
+                  <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+                  <span>
+                    <Name 
+                      address={account.address as `0x${string}`} 
+                      chain={base}
+                      onError={() => account.displayName}
+                    />
+                  </span>
+                </button>
+              );
+            })()}
+          </div>
+        );
+      }}
+    </ConnectButton.Custom>
+  );
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -58,16 +141,10 @@ export function Header() {
             })}
           </nav>
 
-          {/* Theme Toggle & Connect Wallet Button - Desktop */}
-          <div className='hidden md:flex items-center gap-3'>
+          {/* Theme Toggle & Connect Wallet Button */}
+          <div className='flex items-center gap-3'>
             <ThemeToggle />
-            <DesktopWalletConnect />
-          </div>
-
-          {/* Theme Toggle & Connect Wallet Button - Mobile */}
-          <div className='md:hidden flex items-center gap-2'>
-            <ThemeToggle />
-            <WalletConnect />
+            <CustomConnectButton />
           </div>
         </div>
       </div>

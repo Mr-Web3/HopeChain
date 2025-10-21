@@ -58,9 +58,6 @@ export default function ProfilePage() {
   );
   const [monthlyStats, setMonthlyStats] = useState<MonthlyStat[]>([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
-  const [userBasename, setUserBasename] = useState<string | undefined>(
-    undefined
-  );
 
   // Contract reads
   const { data: userDonationTotal } = useReadContract({
@@ -91,21 +88,7 @@ export default function ProfilePage() {
     setIsMounted(true);
   }, []);
 
-  // Get user basename
-  useEffect(() => {
-    if (address && isMounted) {
-      const fetchBasename = async () => {
-        try {
-          // Note: getEnsName is not available in this viem version
-          // For now, we'll just use the truncated address
-          setUserBasename(undefined);
-        } catch (error) {
-          console.error('Error fetching basename:', error);
-        }
-      };
-      fetchBasename();
-    }
-  }, [address, isMounted]);
+  // OnchainKit Name component handles basename resolution automatically
 
   // Function to fetch donation history from blockchain events
   const fetchDonationHistory = useCallback(async () => {
@@ -238,7 +221,6 @@ export default function ProfilePage() {
           {/* Profile Header */}
           <ProfileHeader
             address={address}
-            userBasename={userBasename}
             isInMiniApp={isInMiniApp}
             context={context}
           />
@@ -254,7 +236,6 @@ export default function ProfilePage() {
           <BadgeCard
             hasMintedBadge={Boolean(hasMintedBadge)}
             address={address}
-            userBasename={userBasename}
           />
 
           {/* Donation Progress Chart */}

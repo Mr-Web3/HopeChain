@@ -60,7 +60,6 @@ export default function FrameProvider({ children }: { children: ReactNode }) {
         const context = await sdk.context;
         const isInMiniApp = Boolean(context);
 
-        console.log('FrameProvider - initial context:', context);
         console.log('FrameProvider - isInMiniApp:', isInMiniApp);
 
         // Context should contain user data if available

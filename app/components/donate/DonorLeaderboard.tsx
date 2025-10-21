@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, Trophy, Medal, Award } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Name } from '@coinbase/onchainkit/identity';
+import { base } from 'viem/chains';
 
 interface DonorData {
   address: string;
@@ -133,15 +135,16 @@ export function DonorLeaderboard({
                       </div>
                       <div className='flex flex-col'>
                         <span className='text-sm font-semibold text-foreground'>
-                          {donor.basename ||
-                            `${donor.address.slice(0, 6)}...${donor.address.slice(-4)}`}
+                          <Name 
+                            address={donor.address as `0x${string}`} 
+                            chain={base}
+                            onError={(error) => console.log('Donor Name component error:', error)}
+                          />
                         </span>
-                        {donor.basename && (
-                          <span className='text-xs text-muted-foreground font-mono'>
-                            {donor.address.slice(0, 6)}...
-                            {donor.address.slice(-4)}
-                          </span>
-                        )}
+                        <span className='text-xs text-muted-foreground font-mono'>
+                          {donor.address.slice(0, 6)}...
+                          {donor.address.slice(-4)}
+                        </span>
                       </div>
                     </div>
                     <div className='text-right'>
