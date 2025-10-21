@@ -1,0 +1,10 @@
+{
+  "name": "HopeChain Donor Badge",
+  "description": "Dynamic SBT that evolves with your donations.",
+  "image": "https://red-raw-anteater-260.mypinata.cloud/ipfs/bafybeib26eryikbu6aorkpbirjunxh5s73ywmpuizdf4ye6mapwtup36ye/0.png",
+  "attributes": [
+    { "trait_type": "Total Donated (USDC)", "value": "50.00" },
+    { "trait_type": "Total Donations", "value": 2 },
+    { "trait_type": "Last Donation", "value": "2025-10-20" }
+  ]
+}

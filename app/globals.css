@@ -1,0 +1,366 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --font-sora: 'Sora', sans-serif;
+  --font-geist: 'Geist Sans', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-geist);
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.35);
+  border-radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+code {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Inter', monospace;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem calc(0.25rem + 2px);
+}
+
+/* Custom RainbowKit styles - Light theme */
+.light [data-rk] {
+  --rk-colors-connectButtonBackground: #ffffff;
+  --rk-colors-connectButtonBackgroundHover: #f5f5f5;
+  --rk-colors-connectButtonText: #262626;
+  --rk-colors-connectButtonTextHover: #262626;
+  --rk-colors-connectButtonBorder: rgba(0, 0, 0, 0.1);
+  --rk-colors-connectButtonBorderHover: #0052ff;
+
+  --rk-colors-modalBackground: #ffffff;
+  --rk-colors-modalBorder: rgba(0, 0, 0, 0.1);
+  --rk-colors-modalText: #262626;
+  --rk-colors-modalTextSecondary: #737373;
+
+  --rk-colors-accountButtonBackground: #ffffff;
+  --rk-colors-accountButtonBackgroundHover: #f5f5f5;
+  --rk-colors-accountButtonText: #262626;
+  --rk-colors-accountButtonTextHover: #262626;
+  --rk-colors-accountButtonBorder: rgba(0, 0, 0, 0.1);
+  --rk-colors-accountButtonBorderHover: #0052ff;
+
+  --rk-colors-walletButtonBackground: #ffffff;
+  --rk-colors-walletButtonBackgroundHover: #f5f5f5;
+  --rk-colors-walletButtonText: #262626;
+  --rk-colors-walletButtonTextHover: #262626;
+  --rk-colors-walletButtonBorder: rgba(0, 0, 0, 0.1);
+  --rk-colors-walletButtonBorderHover: #0052ff;
+
+  --rk-colors-actionButtonBackground: #ffffff;
+  --rk-colors-actionButtonBackgroundHover: #f5f5f5;
+  --rk-colors-actionButtonText: #262626;
+  --rk-colors-actionButtonTextHover: #262626;
+  --rk-colors-actionButtonBorder: rgba(0, 0, 0, 0.1);
+  --rk-colors-actionButtonBorderHover: #0052ff;
+
+  --rk-colors-closeButton: #737373;
+  --rk-colors-closeButtonBackground: transparent;
+  --rk-colors-closeButtonBackgroundHover: rgba(0, 0, 0, 0.05);
+
+  --rk-colors-error: #ef4444;
+  --rk-colors-errorBackground: rgba(239, 68, 68, 0.1);
+
+  --rk-colors-success: #12b98f;
+  --rk-colors-successBackground: rgba(18, 185, 143, 0.1);
+
+  --rk-colors-warning: #f59e0b;
+  --rk-colors-warningBackground: rgba(245, 158, 11, 0.1);
+
+  --rk-colors-info: #0052ff;
+  --rk-colors-infoBackground: rgba(0, 82, 255, 0.1);
+
+  --rk-shadows-connectButton: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --rk-shadows-modal: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --rk-shadows-walletButton: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --rk-shadows-actionButton: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+  --rk-radii-connectButton: 12px;
+  --rk-radii-modal: 16px;
+  --rk-radii-walletButton: 12px;
+  --rk-radii-actionButton: 12px;
+
+  --rk-fonts-connectButton: var(--font-geist);
+  --rk-fonts-modal: var(--font-geist);
+  --rk-fonts-walletButton: var(--font-geist);
+  --rk-fonts-actionButton: var(--font-geist);
+}
+
+/* Custom RainbowKit styles - Dark theme */
+.dark [data-rk] {
+  --rk-colors-connectButtonBackground: #121a33;
+  --rk-colors-connectButtonBackgroundHover: #0f1528;
+  --rk-colors-connectButtonText: #e7eaf3;
+  --rk-colors-connectButtonTextHover: #e7eaf3;
+  --rk-colors-connectButtonBorder: rgba(184, 192, 217, 0.2);
+  --rk-colors-connectButtonBorderHover: #0052ff;
+
+  --rk-colors-modalBackground: #121a33;
+  --rk-colors-modalBorder: rgba(184, 192, 217, 0.2);
+  --rk-colors-modalText: #e7eaf3;
+  --rk-colors-modalTextSecondary: #b8c0d9;
+
+  --rk-colors-accountButtonBackground: #121a33;
+  --rk-colors-accountButtonBackgroundHover: #0f1528;
+  --rk-colors-accountButtonText: #e7eaf3;
+  --rk-colors-accountButtonTextHover: #e7eaf3;
+  --rk-colors-accountButtonBorder: rgba(184, 192, 217, 0.2);
+  --rk-colors-accountButtonBorderHover: #0052ff;
+
+  --rk-colors-walletButtonBackground: #121a33;
+  --rk-colors-walletButtonBackgroundHover: #0f1528;
+  --rk-colors-walletButtonText: #e7eaf3;
+  --rk-colors-walletButtonTextHover: #e7eaf3;
+  --rk-colors-walletButtonBorder: rgba(184, 192, 217, 0.2);
+  --rk-colors-walletButtonBorderHover: #0052ff;
+
+  --rk-colors-actionButtonBackground: #121a33;
+  --rk-colors-actionButtonBackgroundHover: #0f1528;
+  --rk-colors-actionButtonText: #e7eaf3;
+  --rk-colors-actionButtonTextHover: #e7eaf3;
+  --rk-colors-actionButtonBorder: rgba(184, 192, 217, 0.2);
+  --rk-colors-actionButtonBorderHover: #0052ff;
+
+  --rk-colors-closeButton: #b8c0d9;
+  --rk-colors-closeButtonBackground: transparent;
+  --rk-colors-closeButtonBackgroundHover: rgba(184, 192, 217, 0.1);
+
+  --rk-colors-error: #ef4444;
+  --rk-colors-errorBackground: rgba(239, 68, 68, 0.1);
+
+  --rk-colors-success: #12b98f;
+  --rk-colors-successBackground: rgba(18, 185, 143, 0.1);
+
+  --rk-colors-warning: #f59e0b;
+  --rk-colors-warningBackground: rgba(245, 158, 11, 0.1);
+
+  --rk-colors-info: #0052ff;
+  --rk-colors-infoBackground: rgba(0, 82, 255, 0.1);
+
+  --rk-shadows-connectButton: 0 8px 30px rgba(0, 82, 255, 0.08);
+  --rk-shadows-modal: 0 8px 30px rgba(0, 82, 255, 0.08);
+  --rk-shadows-walletButton: 0 8px 30px rgba(0, 82, 255, 0.08);
+  --rk-shadows-actionButton: 0 8px 30px rgba(0, 82, 255, 0.08);
+
+  --rk-radii-connectButton: 12px;
+  --rk-radii-modal: 16px;
+  --rk-radii-walletButton: 12px;
+  --rk-radii-actionButton: 12px;
+
+  --rk-fonts-connectButton: var(--font-geist);
+  --rk-fonts-modal: var(--font-geist);
+  --rk-fonts-walletButton: var(--font-geist);
+  --rk-fonts-actionButton: var(--font-geist);
+}
+
+@layer base {
+  :root {
+    /* Light mode - not used but kept for completeness */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+
+  .light {
+    /* Light mode - HopeChain's softer theme */
+    --background: 0 0% 98%; /* #fafafa - softer white */
+    --foreground: 0 0% 15%; /* #262626 - darker text for contrast */
+    --card: 0 0% 100%; /* #ffffff - pure white cards */
+    --card-foreground: 0 0% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+    --primary: 220 100% 50%; /* #0052ff */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%; /* #f5f5f5 - light gray */
+    --secondary-foreground: 0 0% 15%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%; /* #737373 - medium gray text */
+    --accent: 164 70% 40%; /* #12b98f */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 80%; /* #cccccc - darker borders for better visibility */
+    --input: 0 0% 96%;
+    --ring: 220 100% 50%;
+    --chart-1: 220 100% 50%;
+    --chart-2: 164 70% 40%;
+    --chart-3: 280 100% 70%;
+    --chart-4: 30 100% 60%;
+    --chart-5: 340 100% 60%;
+  }
+
+  .dark {
+    /* Dark mode - HopeChain's original theme */
+    --background: 221 39% 4%; /* #0b1020 */
+    --foreground: 220 13% 91%; /* #e7eaf3 */
+    --card: 221 39% 7%; /* #121a33 */
+    --card-foreground: 220 13% 91%;
+    --popover: 221 39% 7%;
+    --popover-foreground: 220 13% 91%;
+    --primary: 220 100% 50%; /* #0052ff */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 221 39% 9%; /* #0f1528 */
+    --secondary-foreground: 220 13% 91%;
+    --muted: 221 39% 9%;
+    --muted-foreground: 220 13% 72%; /* #b8c0d9 */
+    --accent: 164 70% 40%; /* #12b98f */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 72%;
+    --input: 221 39% 9%;
+    --ring: 220 100% 50%;
+    --chart-1: 220 100% 50%;
+    --chart-2: 164 70% 40%;
+    --chart-3: 280 100% 70%;
+    --chart-4: 30 100% 60%;
+    --chart-5: 340 100% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism utilities */
+  .glass {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-sm bg-white/[0.02] border border-white/5;
+  }
+
+  /* Gradient text utilities */
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-accent {
+    @apply bg-gradient-to-r from-accent-400 to-accent-600 bg-clip-text text-transparent;
+  }
+
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-200 hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-200 hover:shadow-[0_0_20px_rgba(0,82,255,0.3)];
+  }
+
+  /* Custom spacing */
+  .section-spacing {
+    @apply mb-16 md:mb-24;
+  }
+
+  /* Focus styles */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  /* Mobile optimizations */
+  .mobile-safe-area {
+    @apply pb-24 md:pb-16;
+  }
+
+  .mobile-text {
+    @apply text-[clamp(0.875rem,2vw,1rem)];
+  }
+
+  .mobile-heading {
+    @apply text-[clamp(1.5rem,4vw,2.5rem)];
+  }
+
+  /* Smooth scrolling for mobile */
+  .smooth-scroll {
+    @apply scroll-smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Next.js Image fixes */
+  img[data-nimg] {
+    display: block !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Custom scrollbar styles */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: rgba(0, 82, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 82, 255, 0.6);
+    border-radius: 4px;
+    border: 1px solid rgba(0, 82, 255, 0.2);
+  }
+
+  .scrollbar-thin:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 82, 255, 0.8);
+  }
+}
