@@ -55,7 +55,7 @@ HopeChain is a revolutionary donation platform that combines the transparency of
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/your-username/hopechain.git
+git clone https://github.com/Mr-Web3/HopeChain.git
 cd hopechain
 ```
 
