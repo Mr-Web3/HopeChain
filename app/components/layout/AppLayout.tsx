@@ -4,7 +4,6 @@ import { useFrameContext } from '../FrameProvider';
 import { Header } from './Header';
 import { MobileTabBar } from './MobileTabBar';
 import ProfilePopover from '../ProfilePopover';
-import { WalletAddress } from '../WalletStatus';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -16,15 +15,12 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <div className='min-h-screen'>
-      {/* Wallet Address - only show in mini app when connected */}
-      <WalletAddress />
-
       {/* Header - show on desktop, hide on mobile */}
       <div className='hidden md:block'>
         <Header />
       </div>
 
-      {/* Profile Popover - only show in mini app */}
+      {/* Profile Popover - only show in mini app (includes wallet address) */}
       {isInMiniApp && <ProfilePopover />}
 
       {/* Main Content */}

@@ -26,7 +26,11 @@ export const minikitConfig = {
     subtitle: 'Hope, Onchain',
     description:
       'Transparent, onchain funding for real cancer treatments — powered by decentralized finance, not corporate overhead.',
-    screenshotUrls: [`${ROOT_URL}/screenshot1.jpg`, `${ROOT_URL}/screenshot2.jpg`, `${ROOT_URL}/screenshot3.jpg`],
+    screenshotUrls: [
+      `${ROOT_URL}/screenshot1.jpg`,
+      `${ROOT_URL}/screenshot2.jpg`,
+      `${ROOT_URL}/screenshot3.jpg`,
+    ],
     iconUrl: `${ROOT_URL}/hopeLogo.png`,
     splashImageUrl: `${ROOT_URL}/hopeLogo.png`,
     splashBackgroundColor: '#06090E',

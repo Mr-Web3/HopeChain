@@ -13,7 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: METADATA.name,
     description: METADATA.description,
-    metadataBase: new URL(METADATA.homeUrl || 'https://hope-chain-five.vercel.app'),
+    metadataBase: new URL(
+      METADATA.homeUrl || 'https://hope-chain-five.vercel.app'
+    ),
     keywords: [
       'base',
       'farcaster',

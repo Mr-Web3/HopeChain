@@ -2,7 +2,11 @@
 
 import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RainbowKitProvider, darkTheme, lightTheme } from '@rainbow-me/rainbowkit';
+import {
+  RainbowKitProvider,
+  darkTheme,
+  lightTheme,
+} from '@rainbow-me/rainbowkit';
 import { MiniKitProvider } from '@coinbase/onchainkit/minikit';
 import { ConditionalSafeArea } from './components/ConditionalSafeArea';
 import { ReactNode, useState, useEffect } from 'react';
@@ -16,15 +20,15 @@ const queryClient = new QueryClient();
 function RainbowKitWrapper({ children }: { children: ReactNode }) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  
+
   // Prevent hydration mismatch by only rendering after mount
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   // Use a stable theme that won't cause hydration issues
-  const currentTheme = mounted ? (resolvedTheme || 'light') : 'light';
-  
+  const currentTheme = mounted ? resolvedTheme || 'light' : 'light';
+
   return (
     <RainbowKitProvider
       theme={currentTheme === 'dark' ? darkTheme() : lightTheme()}
@@ -54,9 +58,7 @@ export function Providers({ children }: { children: ReactNode }) {
     >
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
-          <RainbowKitWrapper>
-            {children}
-          </RainbowKitWrapper>
+          <RainbowKitWrapper>{children}</RainbowKitWrapper>
         </QueryClientProvider>
       </WagmiProvider>
     </ThemeProvider>

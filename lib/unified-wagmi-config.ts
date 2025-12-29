@@ -10,9 +10,7 @@ export const config = getDefaultConfig({
   chains: [base, baseSepolia], // Include mainnet for ENS resolution
   ssr: true,
   transports: {
-    [base.id]: http(
-      process.env.NEXT_PUBLIC_BASE_RPC_URL || 'https://base.org'
-    ),
+    [base.id]: http(process.env.NEXT_PUBLIC_BASE_RPC_URL || 'https://base.org'),
     [baseSepolia.id]: http(
       process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC || 'https://sepolia.base.org'
     ),

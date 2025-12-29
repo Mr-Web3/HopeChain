@@ -3,7 +3,12 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   devIndicators: false,
   // Allow cross-origin requests from ngrok and other development domains
-  allowedDevOrigins: ['help.ngrok.dev', 'localhost:3000', '127.0.0.1:3000', 'hope-chain-five.vercel.app'],
+  allowedDevOrigins: [
+    'help.ngrok.dev',
+    'localhost:3000',
+    '127.0.0.1:3000',
+    'hope-chain-five.vercel.app',
+  ],
   images: {
     remotePatterns: [
       {
@@ -21,6 +26,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '*.mypinata.cloud',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
         port: '',
         pathname: '/**',
       },

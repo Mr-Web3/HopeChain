@@ -7,6 +7,11 @@ import { fetchNeynarUserProfile, NeynarUserProfile } from '../../utils/neynar';
 import Image from 'next/image';
 import { useOpenUrl } from '@coinbase/onchainkit/minikit';
 import { ThemeToggle } from './ui/ThemeToggle';
+import { useAccount } from 'wagmi';
+import { Name } from '@coinbase/onchainkit/identity';
+import { base } from 'viem/chains';
+import { Copy } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function ProfilePopover() {
   const frameContext = useFrameContext();
@@ -20,6 +25,7 @@ export default function ProfilePopover() {
   );
   const [loadingProfile, setLoadingProfile] = useState(false);
   const openUrl = useOpenUrl();
+  const { address, isConnected } = useAccount();
 
   // Debug logging
   useEffect(() => {
@@ -85,6 +91,29 @@ export default function ProfilePopover() {
     window.addEventListener('click', onWindowClick);
     return () => window.removeEventListener('click', onWindowClick);
   }, []);
+
+  const copyAddress = async () => {
+    if (!address) return;
+    try {
+      await navigator.clipboard.writeText(address);
+      toast.success('Address copied to clipboard!', {
+        style: {
+          background: 'hsl(var(--card))',
+          color: 'hsl(var(--card-foreground))',
+          border: '1px solid hsl(var(--accent))',
+        },
+      });
+    } catch (err) {
+      console.error('Failed to copy address:', err);
+      toast.error('Failed to copy address', {
+        style: {
+          background: 'hsl(var(--card))',
+          color: 'hsl(var(--card-foreground))',
+          border: '1px solid hsl(var(--destructive))',
+        },
+      });
+    }
+  };
 
   if (!mounted) return null;
 
@@ -156,121 +185,164 @@ export default function ProfilePopover() {
           >
             <div className='p-6'>
               {/* Header with Profile Photo and Theme Toggle */}
-              <div className='flex items-start justify-between mb-6'>
+              <div className='flex items-start justify-between mb-8'>
                 {/* Profile Photo */}
-                <div className='flex flex-col items-center'>
+                <div className='flex-shrink-0'>
                   {user.pfpUrl ? (
                     <Image
                       src={user.pfpUrl}
                       alt='Profile'
-                      className='h-16 w-16 rounded-md object-cover shadow-lg'
-                      width={64}
-                      height={64}
+                      className='h-20 w-20 rounded-xl object-cover shadow-md border-2 border-border'
+                      width={80}
+                      height={80}
                     />
                   ) : (
-                    <div className='h-16 w-16 rounded-md bg-muted shadow-lg' />
+                    <div className='h-20 w-20 rounded-xl bg-muted shadow-md border-2 border-border' />
                   )}
                 </div>
 
                 {/* Theme Toggle - Top Right */}
-                <div className='flex items-center'>
+                <div className='flex items-center pt-1'>
                   <ThemeToggle />
                 </div>
               </div>
 
               {/* User Info Section */}
-              <div className='text-center mb-6'>
-                <div className='text-foreground font-semibold text-xl mb-1'>
+              <div className='mb-6'>
+                <h2 className='text-2xl font-bold text-foreground mb-2'>
                   {neynarProfile?.display_name ||
                     user.displayName ||
                     user.username ||
                     `FID ${user.fid}`}
-                </div>
+                </h2>
                 {(user.username || user.fid) && (
-                  <div className='text-sm text-muted-foreground mb-2'>
-                    {user.username ? `@${user.username}` : ''}
-                    {user.username && user.fid ? ' · ' : ''}
-                    {user.fid ? `fid ${user.fid}` : ''}
+                  <div className='flex items-center gap-2 text-sm text-muted-foreground mb-3'>
+                    {user.username && (
+                      <span className='font-medium'>@{user.username}</span>
+                    )}
+                    {user.username && user.fid && (
+                      <span className='text-muted-foreground/50'>·</span>
+                    )}
+                    {user.fid && (
+                      <span className='text-xs bg-muted px-2 py-0.5 rounded-full font-medium'>
+                        FID {user.fid}
+                      </span>
+                    )}
                   </div>
                 )}
                 {/* Location */}
                 {(user.location?.description ||
                   neynarProfile?.location?.description) && (
-                  <div className='text-sm text-muted-foreground'>
-                    📍 {user.location?.description ||
-                      neynarProfile?.location?.description}
+                  <div className='flex items-center gap-1.5 text-sm text-muted-foreground mb-4'>
+                    <span>📍</span>
+                    <span>
+                      {user.location?.description ||
+                        neynarProfile?.location?.description}
+                    </span>
+                  </div>
+                )}
+
+                {/* Wallet Address Section - Only show if connected */}
+                {isConnected && address && (
+                  <div className='bg-muted/20 rounded-xl p-3 border border-border/30 flex items-center justify-between gap-3'>
+                    <div className='flex items-center gap-2 flex-1 min-w-0'>
+                      <div className='w-2 h-2 bg-green-500 rounded-full flex-shrink-0'></div>
+                      <div className='flex-1 min-w-0'>
+                        <Name
+                          address={address as `0x${string}`}
+                          chain={base}
+                          onError={error =>
+                            console.log('Name component error:', error)
+                          }
+                        />
+                      </div>
+                    </div>
+                    <button
+                      onClick={copyAddress}
+                      className='flex-shrink-0 p-2 hover:bg-muted/50 rounded-lg transition-colors active:scale-95'
+                      aria-label='Copy address'
+                    >
+                      <Copy className='h-4 w-4 text-muted-foreground' />
+                    </button>
                   </div>
                 )}
               </div>
 
               {/* Stats Section */}
-              {neynarProfile && (
-                <div className='bg-muted/30 rounded-lg p-4 mb-6'>
-                  <div className='flex justify-center gap-8'>
-                    <div className='text-center'>
-                      <div className='text-foreground font-semibold text-lg'>
-                        {neynarProfile.following_count?.toLocaleString() || '-'}
+              {neynarProfile &&
+                (neynarProfile.following_count ||
+                  neynarProfile.follower_count) && (
+                  <div className='bg-muted/30 rounded-xl p-5 mb-6 border border-border/50'>
+                    <div className='flex justify-around'>
+                      <div className='flex flex-col items-center'>
+                        <div className='text-2xl font-bold text-foreground mb-1'>
+                          {neynarProfile.following_count?.toLocaleString() ||
+                            '0'}
+                        </div>
+                        <div className='text-xs font-medium text-muted-foreground uppercase tracking-wide'>
+                          Following
+                        </div>
                       </div>
-                      <div className='text-sm text-muted-foreground'>
-                        Following
-                      </div>
-                    </div>
-                    <div className='text-center'>
-                      <div className='text-foreground font-semibold text-lg'>
-                        {neynarProfile.follower_count?.toLocaleString() || '-'}
-                      </div>
-                      <div className='text-sm text-muted-foreground'>
-                        Followers
+                      <div className='w-px bg-border' />
+                      <div className='flex flex-col items-center'>
+                        <div className='text-2xl font-bold text-foreground mb-1'>
+                          {neynarProfile.follower_count?.toLocaleString() ||
+                            '0'}
+                        </div>
+                        <div className='text-xs font-medium text-muted-foreground uppercase tracking-wide'>
+                          Followers
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Bio Section */}
               {(neynarProfile?.profile?.bio?.text || user.bio) && (
-                <div className='bg-muted/20 rounded-lg p-4 mb-6'>
-                  <div className='text-sm text-foreground leading-relaxed'>
+                <div className='bg-muted/20 rounded-xl p-4 mb-6 border border-border/30'>
+                  <p className='text-sm text-foreground leading-relaxed'>
                     {neynarProfile?.profile?.bio?.text || user.bio}
-                  </div>
+                  </p>
                 </div>
               )}
 
               {/* Social Links */}
-              {neynarProfile?.social_verifications && (
-                <div className='flex justify-center gap-6'>
-                  {neynarProfile.social_verifications.twitter && (
-                    <button
-                      onClick={() =>
-                        openUrl(
-                          `https://twitter.com/${neynarProfile.social_verifications.twitter}`
-                        )
-                      }
-                      className='flex items-center gap-2 px-4 py-2 bg-blue-500/10 text-blue-500 rounded-lg hover:bg-blue-500/20 transition-colors'
-                    >
-                      <span className='text-sm'>🐦</span>
-                      <span className='text-sm font-medium'>
-                        @{neynarProfile.social_verifications.twitter}
-                      </span>
-                    </button>
-                  )}
-                  {neynarProfile.social_verifications.github && (
-                    <button
-                      onClick={() =>
-                        openUrl(
-                          `https://github.com/${neynarProfile.social_verifications.github}`
-                        )
-                      }
-                      className='flex items-center gap-2 px-4 py-2 bg-gray-500/10 text-gray-500 rounded-lg hover:bg-gray-500/20 transition-colors'
-                    >
-                      <span className='text-sm'>🐙</span>
-                      <span className='text-sm font-medium'>
-                        @{neynarProfile.social_verifications.github}
-                      </span>
-                    </button>
-                  )}
-                </div>
-              )}
+              {neynarProfile?.social_verifications &&
+                (neynarProfile.social_verifications.twitter ||
+                  neynarProfile.social_verifications.github) && (
+                  <div className='space-y-2'>
+                    {neynarProfile.social_verifications.twitter && (
+                      <button
+                        onClick={() =>
+                          openUrl(
+                            `https://twitter.com/${neynarProfile.social_verifications.twitter}`
+                          )
+                        }
+                        className='w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 rounded-xl transition-all duration-200 border border-blue-500/20 hover:border-blue-500/40 active:scale-[0.98]'
+                      >
+                        <span className='text-base'>🐦</span>
+                        <span className='text-sm font-medium'>
+                          @{neynarProfile.social_verifications.twitter}
+                        </span>
+                      </button>
+                    )}
+                    {neynarProfile.social_verifications.github && (
+                      <button
+                        onClick={() =>
+                          openUrl(
+                            `https://github.com/${neynarProfile.social_verifications.github}`
+                          )
+                        }
+                        className='w-full flex items-center justify-center gap-2 px-4 py-3 bg-foreground/5 hover:bg-foreground/10 text-foreground rounded-xl transition-all duration-200 border border-border hover:border-border/80 active:scale-[0.98]'
+                      >
+                        <span className='text-base'>🐙</span>
+                        <span className='text-sm font-medium'>
+                          @{neynarProfile.social_verifications.github}
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                )}
             </div>
           </div>
         </>

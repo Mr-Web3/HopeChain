@@ -194,19 +194,19 @@ code {
 }
 
 /* Specific targeting for Copy Address and Disconnect buttons */
-.dark [data-rk] button[data-rk][aria-label*="Copy"],
-.dark [data-rk] button[data-rk][aria-label*="Disconnect"],
-.dark [data-rk] button[data-rk]:has(svg[data-testid="copy-icon"]),
-.dark [data-rk] button[data-rk]:has(svg[data-testid="disconnect-icon"]) {
+.dark [data-rk] button[data-rk][aria-label*='Copy'],
+.dark [data-rk] button[data-rk][aria-label*='Disconnect'],
+.dark [data-rk] button[data-rk]:has(svg[data-testid='copy-icon']),
+.dark [data-rk] button[data-rk]:has(svg[data-testid='disconnect-icon']) {
   background-color: #121a33 !important;
   color: #e7eaf3 !important;
   border: 1px solid rgba(184, 192, 217, 0.2) !important;
 }
 
-.dark [data-rk] button[data-rk][aria-label*="Copy"]:hover,
-.dark [data-rk] button[data-rk][aria-label*="Disconnect"]:hover,
-.dark [data-rk] button[data-rk]:has(svg[data-testid="copy-icon"]):hover,
-.dark [data-rk] button[data-rk]:has(svg[data-testid="disconnect-icon"]):hover {
+.dark [data-rk] button[data-rk][aria-label*='Copy']:hover,
+.dark [data-rk] button[data-rk][aria-label*='Disconnect']:hover,
+.dark [data-rk] button[data-rk]:has(svg[data-testid='copy-icon']):hover,
+.dark [data-rk] button[data-rk]:has(svg[data-testid='disconnect-icon']):hover {
   background-color: #0f1528 !important;
   color: #e7eaf3 !important;
   border-color: #0052ff !important;

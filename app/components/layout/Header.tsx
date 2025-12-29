@@ -19,7 +19,6 @@ const navigation = [
 
 // Custom ConnectButton component that shows basenames
 function CustomConnectButton() {
-
   return (
     <ConnectButton.Custom>
       {({
@@ -36,8 +35,7 @@ function CustomConnectButton() {
           ready &&
           account &&
           chain &&
-          (!authenticationStatus ||
-            authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === 'authenticated');
 
         return (
           <div
@@ -83,8 +81,8 @@ function CustomConnectButton() {
                 >
                   <div className='w-2 h-2 bg-green-500 rounded-full'></div>
                   <span>
-                    <Name 
-                      address={account.address as `0x${string}`} 
+                    <Name
+                      address={account.address as `0x${string}`}
                       chain={base}
                       onError={() => account.displayName}
                     />
@@ -113,11 +111,12 @@ export function Header() {
               className='flex items-center hover:opacity-80 transition-opacity'
             >
               <div className='rounded-xl flex items-center justify-center'>
-                <Image src='/logos/hopeLogo3.png' 
-                  alt='HopeChain Logo' 
-                  width={100} 
-                  height={100} 
-                  className='w-28 h-28 object-contain' 
+                <Image
+                  src='/logos/hopeLogo3.png'
+                  alt='HopeChain Logo'
+                  width={100}
+                  height={100}
+                  className='w-28 h-28 object-contain'
                 />
               </div>
               {/* <span className='ml-0 mt-2 text-lg font-bold text-foreground leading-none'>

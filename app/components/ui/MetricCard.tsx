@@ -63,9 +63,13 @@ export function MetricCard({
           </span>
         </div>
 
-        <div className='text-xl md:text-2xl font-bold text-foreground mb-2'>{value}</div>
+        <div className='text-xl md:text-2xl font-bold text-foreground mb-2'>
+          {value}
+        </div>
 
-        <div className='text-xs md:text-sm text-muted-foreground'>{subtext}</div>
+        <div className='text-xs md:text-sm text-muted-foreground'>
+          {subtext}
+        </div>
 
         {/* Subtle gradient overlay */}
         <div

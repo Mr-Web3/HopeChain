@@ -15,8 +15,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   // Temporary base URI (for dynamic metadata API, will update post-deploy)
   // Later, you’ll call setBaseURI("https://yourdomain.com/api/metadata")
-  const TEMP_BASE_URI =
-    'http://localhost:3000/api/metadata';
+  const TEMP_BASE_URI = 'http://localhost:3000/api/metadata';
 
   const MANAGER_ADDRESS = deployer; // can replace with backend or multisig if needed
 

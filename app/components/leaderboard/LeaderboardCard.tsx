@@ -85,7 +85,6 @@ export function LeaderboardCard({ donor, index }: LeaderboardCardProps) {
     }
   };
 
-
   const formatAmount = (amount: bigint) => {
     return (Number(amount) / 1e6).toLocaleString('en-US', {
       minimumFractionDigits: 2,
@@ -118,7 +117,10 @@ export function LeaderboardCard({ donor, index }: LeaderboardCardProps) {
               <p className='text-2xl font-bold text-foreground mb-2'>
                 ${formatAmount(donor.totalDonated)}
               </p>
-              <Badge variant='secondary' className={`text-xs px-2 py-1 ${tierColor}`}>
+              <Badge
+                variant='secondary'
+                className={`text-xs px-2 py-1 ${tierColor}`}
+              >
                 {tier}
               </Badge>
             </div>

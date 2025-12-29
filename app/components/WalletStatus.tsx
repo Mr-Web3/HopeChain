@@ -86,10 +86,10 @@ export function WalletAddress() {
         >
           <div className='w-2 h-2 bg-green-500 rounded-full'></div>
           <span>
-            <Name 
-              address={address as `0x${string}`} 
+            <Name
+              address={address as `0x${string}`}
               chain={base}
-              onError={(error) => console.log('Name component error:', error)}
+              onError={error => console.log('Name component error:', error)}
             />
           </span>
           <ChevronDown

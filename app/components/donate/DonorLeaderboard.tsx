@@ -135,10 +135,12 @@ export function DonorLeaderboard({
                       </div>
                       <div className='flex flex-col'>
                         <span className='text-sm font-semibold text-foreground'>
-                          <Name 
-                            address={donor.address as `0x${string}`} 
+                          <Name
+                            address={donor.address as `0x${string}`}
                             chain={base}
-                            onError={(error) => console.log('Donor Name component error:', error)}
+                            onError={error =>
+                              console.log('Donor Name component error:', error)
+                            }
                           />
                         </span>
                         <span className='text-xs text-muted-foreground font-mono'>

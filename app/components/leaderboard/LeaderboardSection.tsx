@@ -130,7 +130,7 @@ export function LeaderboardSection({
         // Set ranks with proper tie handling
         let currentRank = 1;
         let previousAmount = validDonors[0]?.totalDonated;
-        
+
         validDonors.forEach((donor, index) => {
           if (donor) {
             // If this donor's amount is different from the previous, update the rank
