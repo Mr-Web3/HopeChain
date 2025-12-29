@@ -48,23 +48,24 @@ export function MetricCard({
     >
       <Card
         className={cn(
-          'relative overflow-hidden border-0 bg-gradient-to-br p-6 shadow-md shadow-black/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10',
+          'relative overflow-hidden border-0 bg-gradient-to-br p-4 md:p-6 shadow-md shadow-black/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10',
           'from-white/5 to-white/10 border-white/10 hover:border-white/20',
+          'w-full min-h-[120px] md:min-h-[140px]',
           className
         )}
       >
-        <div className='flex items-center gap-3 mb-2'>
-          <div className='text-2xl text-primary transition-transform duration-300 group-hover:scale-110'>
+        <div className='flex items-center gap-3 mb-3'>
+          <div className='text-xl md:text-2xl text-primary transition-transform duration-300 group-hover:scale-110'>
             {icon}
           </div>
-          <span className='text-sm text-muted-foreground font-medium'>
+          <span className='text-sm md:text-sm text-muted-foreground font-medium'>
             {title}
           </span>
         </div>
 
-        <div className='text-2xl font-bold text-foreground mb-1'>{value}</div>
+        <div className='text-xl md:text-2xl font-bold text-foreground mb-2'>{value}</div>
 
-        <div className='text-sm text-muted-foreground'>{subtext}</div>
+        <div className='text-xs md:text-sm text-muted-foreground'>{subtext}</div>
 
         {/* Subtle gradient overlay */}
         <div

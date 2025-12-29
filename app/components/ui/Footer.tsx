@@ -157,8 +157,8 @@ export function Footer({
           <p className='mt-2'>
             Transparent giving. Real healing. Built on Base.
           </p>
-          <p className='mt-4 text-foreground font-medium underline'>
-            Built by Decentral Bros
+          <p className='mt-4 text-foreground font-medium'>
+            Built by Justin @Decentral Bros
           </p>
 
           {/* Social Icons */}
@@ -167,7 +167,7 @@ export function Footer({
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => openUrl('https://www.decentralbros.io')}
-              className='p-2 rounded-full bg-gradient-to-r from-primary/10 to-purple-500/10 hover:from-primary/20 hover:to-purple-500/20 border border-border/50 hover:border-primary/30 transition-all duration-200'
+              className='p-2 rounded-md bg-gradient-to-r from-primary/10 to-purple-500/10 hover:from-primary/20 hover:to-purple-500/20 border border-border/50 hover:border-primary/30 transition-all duration-200'
               aria-label='Visit our website'
             >
               <FaGlobe className='w-5 h-5 text-foreground hover:text-primary transition-colors duration-200' />
@@ -176,8 +176,8 @@ export function Footer({
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => openUrl('https://x.com/DecentralBros_')}
-              className='p-2 rounded-full bg-gradient-to-r from-primary/10 to-purple-500/10 hover:from-primary/20 hover:to-purple-500/20 border border-border/50 hover:border-primary/30 transition-all duration-200'
+              onClick={() => openUrl('https://justin.dbro.dev')}
+              className='p-2 rounded-md bg-gradient-to-r from-primary/10 to-purple-500/10 hover:from-primary/20 hover:to-purple-500/20 border border-border/50 hover:border-primary/30 transition-all duration-200'
               aria-label='Follow us on X'
             >
               <FaXTwitter className='w-5 h-5 text-foreground hover:text-primary transition-colors duration-200' />

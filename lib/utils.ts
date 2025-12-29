@@ -12,7 +12,7 @@ export const METADATA = {
   homeUrl: process.env.NEXT_PUBLIC_APP_URL,
   image: `${process.env.NEXT_PUBLIC_APP_URL}/hopeLogo.png`,
   iconImageUrl: `${process.env.NEXT_PUBLIC_APP_URL}/hopeLogo.png`,
-  splashBackgroundColor: '#0b1020',
+  splashBackgroundColor: '#06090E',
   twitter: '@DecentralBros_',
   github: process.env.NEXT_PUBLIC_GITHUB_URL,
 };

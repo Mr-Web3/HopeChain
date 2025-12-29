@@ -25,48 +25,50 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract DonationSBT is ERC721URIStorage, Ownable, ReentrancyGuard {
-    address public vault;
-    uint256 public nextId;
-    string public baseURI;
+    address public vault; // Address of the donation vault contract
+    uint256 public nextId; // TokenId (example (1))
+    string public baseURI; // SBT image URI from IPFS
 
     struct DonorData {
-        uint256 totalDonated;
-        uint256 donationCount;
-        uint256 lastDonation;
-        uint256 tokenId;
+        uint256 totalDonated; // Tracks each donors total donated
+        uint256 donationCount; // Tracks each donors donation count how many times they donated
+        uint256 lastDonation; // Tracks the last time the user donated
+        uint256 tokenId; // tokenId
     }
 
-    mapping(address => DonorData) public donors;
-    mapping(address => bool) public hasMinted;
+    mapping(address => DonorData) public donors; // Mapping that returns the addresses of the Donor's data
+    mapping(address => bool) public hasMinted; // Mapping that returns the address checks if they have minted with a (bool(true or false))
 
-    event VaultUpdated(address indexed newVault);
-    event BaseURIUpdated(string newURI);
-    event DonorUpdated(address indexed donor, uint256 totalDonated, uint256 count, uint256 lastDonation);
-    event TokensRecovered(address indexed token, uint256 amount);
-    event ETHRecovered(uint256 amount);
+    event VaultUpdated(address indexed newVault); // Event emits when the Donation vault contracts address is updated
+    event BaseURIUpdated(string newURI); // Event emits when the BaseUri is updated
+    event DonorUpdated(address indexed donor, uint256 totalDonated, uint256 count, uint256 lastDonation); // Event emits when tokens are recovered
+    event TokensRecovered(address indexed token, uint256 amount); // Event emits when tokens are recovered
+    event ETHRecovered(uint256 amount); // Event emits when ETH is recovered from this contract
 
+    // Modifier onlyVault can make changes to this contract on admin functions only which is eqaul to the msg.sender = deployer of this contract.
     modifier onlyVault() {
         require(msg.sender == vault, "Not vault");
         _;
     }
-
+    // Constructor argument which takes the (baseUri) that is stored onchin using string memory, the constructor is also setting the ERC721 contracts
+    // Name & Symbol.
     constructor(string memory _baseURI)
         ERC721("HopeChain Donor Badge", "HOPE")
     {
         baseURI = _baseURI;
     }
-
+    // This function allows onlyOwner to set the donationvault.sol contracts addrss & requires that the addres can not be zero.
     function setVault(address _vault) external onlyOwner nonReentrant {
         require(_vault != address(0), "Invalid vault");
         vault = _vault;
         emit VaultUpdated(_vault);
     }
-
+    // This function allows the onlyOwner to set a new baseUri which should be set to match our frontend API (https://hope-chain-five.vercel.app/api/metadata).
     function setBaseURI(string memory _uri) external onlyOwner nonReentrant {
         baseURI = _uri;
         emit BaseURIUpdated(_uri);
     }
-
+    // This function can only be called by the onlyVault which is = to the deployer or a specific set address & == msg.sender.
     function mintOrUpdateBadge(address donor, uint256 amount) external onlyVault nonReentrant {
         if (!hasMinted[donor]) {
             nextId++;
@@ -91,13 +93,13 @@ contract DonationSBT is ERC721URIStorage, Ownable, ReentrancyGuard {
 
         emit DonorUpdated(donor, donors[donor].totalDonated, donors[donor].donationCount, donors[donor].lastDonation);
     }
-
+    // This public function returns the tokenUri specific to each donor (example (TokenId 1, 2, 3, 4) ).
     function tokenURIForDonor(address donor) public view returns (string memory) {
         // Example: if baseURI = "https://api.hopechain.io/metadata"
         // returns "https://api.hopechain.io/metadata/0xABC123..."
         return string(abi.encodePacked(baseURI, "/", toAsciiString(donor)));
     }
-
+    // This function converts strings into Ascii & stores them onchain using the key tag (memory) using integers (uint256 to unit8).
     function toAsciiString(address x) internal pure returns (string memory) {
         bytes memory s = new bytes(40);
         for (uint256 i = 0; i < 20; i++) {
@@ -109,13 +111,15 @@ contract DonationSBT is ERC721URIStorage, Ownable, ReentrancyGuard {
         }
         return string(s);
     }
-
+    // This function can only be used interanlly buy the DonationSBT.sol contract and can only be called by this contract used in the function toAsciiString.
     function char(bytes1 b) internal pure returns (bytes1 c) {
         if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
         else return bytes1(uint8(b) + 0x57);
     }
 
     /* -------- Soulbound Enforcement -------- */
+    //  This function is only used interanlly on this contract that checks before a transfer is made the following values are assigned
+    // (address, the tokenId, and the batchSize). It also requires that the address its being sent from & sent to can not be zero.
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
         internal override
     {
@@ -124,11 +128,14 @@ contract DonationSBT is ERC721URIStorage, Ownable, ReentrancyGuard {
     }
 
     /* -------- Recovery Functions -------- */
+    // This function allows the onlyOwner to recover any ERC20 tokens sent to this contract arguments are (address of the ERC20 token, & the amount) make
+    // sure that you know how many decimals the token uses to set the correct values when withdrawing to prevent transaction failure.
     function recoverERC20(address tokenAddress, uint256 amount) external onlyOwner nonReentrant {
         IERC20(tokenAddress).transfer(owner(), amount);
         emit TokensRecovered(tokenAddress, amount);
     }
-
+    // This function allows onlyOwner to recover ETH sent to this contract the only input argemunt is the vlaue = amount, then it does require the
+    // transaction (bool) to = true which equals success. If the transaction fails and returns false the entire transaction will revert.
     function recoverETH(uint256 amount) external onlyOwner nonReentrant {
         (bool success, ) = payable(owner()).call{value: amount}("");
         require(success, "ETH transfer failed");

@@ -49,18 +49,18 @@ export function FeatureCard({
     >
       <motion.div
         whileHover={{
-          scale: 1.05,
-          rotateY: 5,
+          scale: 1.02,
+          rotateY: 3,
           transition: { duration: 0.2 },
         }}
         className='relative'
       >
         <Card
           className={cn(
-            'relative overflow-hidden bg-gradient-to-br p-6 shadow-md shadow-black/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10',
+            'relative overflow-hidden bg-gradient-to-br p-4 md:p-6 shadow-md shadow-black/20 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10',
             'from-white/5 to-white/10 hover:border-white/20',
             'group-hover:from-white/10 group-hover:to-white/15',
-            'h-full flex flex-col min-h-[280px]',
+            'h-full flex flex-col min-h-[200px] md:min-h-[220px]',
             className
           )}
         >
@@ -74,22 +74,22 @@ export function FeatureCard({
             whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ duration: 0.2 }}
             className={cn(
-              'w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-all duration-300',
+              'w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mx-auto mb-4 md:mb-5 transition-all duration-300',
               'group-hover:shadow-lg group-hover:shadow-primary/20',
               getGradientClass(gradientFrom, gradientTo)
             )}
           >
-            <span className='text-3xl text-white group-hover:scale-110 transition-transform duration-200'>
+            <span className='text-xl md:text-2xl text-white group-hover:scale-110 transition-transform duration-200'>
               {icon}
             </span>
           </motion.div>
 
           {/* Content */}
           <div className='flex flex-col flex-1'>
-            <h3 className='text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors duration-200'>
+            <h3 className='text-lg md:text-xl font-semibold text-foreground mb-2 md:mb-3 group-hover:text-primary transition-colors duration-200'>
               {title}
             </h3>
-            <p className='text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-200 flex-1'>
+            <p className='text-sm md:text-base text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-200 flex-1'>
               {description}
             </p>
           </div>

@@ -5,7 +5,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Trophy, Medal, Award, ExternalLink } from 'lucide-react';
 import { useOpenUrl } from '@coinbase/onchainkit/minikit';
-import Image from 'next/image';
 
 interface DonorData {
   address: string;
@@ -86,9 +85,6 @@ export function LeaderboardCard({ donor, index }: LeaderboardCardProps) {
     }
   };
 
-  const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
 
   const formatAmount = (amount: bigint) => {
     return (Number(amount) / 1e6).toLocaleString('en-US', {
@@ -108,57 +104,33 @@ export function LeaderboardCard({ donor, index }: LeaderboardCardProps) {
       whileHover={{ scale: 1.02, y: -2 }}
     >
       <Card
-        className={`${getRankGradient(donor.rank)} rounded-xl p-4 hover:shadow-lg transition-all duration-300`}
+        className={`${getRankGradient(donor.rank)} rounded-xl p-6 hover:shadow-lg transition-all duration-300`}
       >
         <CardContent className='p-0'>
-          <div className='flex items-center space-x-4'>
+          <div className='flex flex-col items-center text-center space-y-3'>
             {/* Rank */}
-            <div className='flex-shrink-0'>{getRankIcon(donor.rank)}</div>
-
-            {/* Badge Image */}
-            <div className='flex-shrink-0'>
-              {donor.metadata?.image ? (
-                <Image
-                  src={donor.metadata.image}
-                  alt={`${donor.metadata.name || 'Donor'} badge`}
-                  width={48}
-                  height={48}
-                  className='w-12 h-12 rounded-full object-cover border-2 border-white/20'
-                />
-              ) : (
-                <div className='w-12 h-12 rounded-full bg-gradient-to-r from-primary to-purple-600 flex items-center justify-center'>
-                  <span className='text-white font-bold text-sm'>
-                    {donor.address.slice(2, 4).toUpperCase()}
-                  </span>
-                </div>
-              )}
+            <div className='flex items-center justify-center'>
+              {getRankIcon(donor.rank)}
             </div>
 
-            {/* Donor Info */}
-            <div className='flex-1 min-w-0'>
-              <div className='flex items-center space-x-2 mb-1'>
-                <p className='font-medium text-sm truncate'>
-                  {formatAddress(donor.address)}
-                </p>
-                <Badge variant='secondary' className={`text-xs ${tierColor}`}>
-                  {tier}
-                </Badge>
-              </div>
-              <p className='text-lg font-bold text-foreground'>
+            {/* Donation Amount */}
+            <div className='text-center'>
+              <p className='text-2xl font-bold text-foreground mb-2'>
                 ${formatAmount(donor.totalDonated)}
               </p>
+              <Badge variant='secondary' className={`text-xs px-2 py-1 ${tierColor}`}>
+                {tier}
+              </Badge>
             </div>
 
             {/* External Link */}
-            <div className='flex-shrink-0'>
-              <button
-                onClick={() => openUrl(`/api/metadata/${donor.address}`)}
-                className='text-muted-foreground hover:text-primary transition-colors'
-                title='View NFT metadata'
-              >
-                <ExternalLink className='w-4 h-4' />
-              </button>
-            </div>
+            <button
+              onClick={() => openUrl(`/api/metadata/${donor.address}`)}
+              className='text-muted-foreground hover:text-primary transition-colors p-1'
+              title='View NFT metadata'
+            >
+              <ExternalLink className='w-4 h-4' />
+            </button>
           </div>
         </CardContent>
       </Card>

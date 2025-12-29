@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, DollarSign, Users, FileText, User, Heart } from 'lucide-react';
+import { Home, DollarSign, Users, FileText, User } from 'lucide-react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Name } from '@coinbase/onchainkit/identity';
 import { base } from 'viem/chains';
+import Image from 'next/image';
 
 const navigation = [
   { name: 'Home', href: '/', icon: Home },
@@ -111,12 +112,17 @@ export function Header() {
               href='/'
               className='flex items-center hover:opacity-80 transition-opacity'
             >
-              <div className='w-8 h-8 bg-gradient-to-r from-primary to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary/25'>
-                <Heart className='w-5 h-5 text-white' />
+              <div className='rounded-xl flex items-center justify-center'>
+                <Image src='/logos/hopeLogo3.png' 
+                  alt='HopeChain Logo' 
+                  width={100} 
+                  height={100} 
+                  className='w-28 h-28 object-contain' 
+                />
               </div>
-              <span className='ml-3 text-xl font-bold text-foreground'>
-                HopeChain
-              </span>
+              {/* <span className='ml-0 mt-2 text-lg font-bold text-foreground leading-none'>
+                Chain
+              </span> */}
             </Link>
           </div>
 

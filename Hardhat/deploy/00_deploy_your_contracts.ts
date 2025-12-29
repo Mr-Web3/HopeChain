@@ -11,12 +11,12 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // ---------------------------------------------------------------------------
   // 1️⃣  Constants
   // ---------------------------------------------------------------------------
-  const USDC_BASE_SEPOLIA = '0x94d07C7Aa3F8910ACeF21300098DA9171d06220C'; // official Base Sepolia USDC
+  const USDC_BASE_SEPOLIA = '0x94d07C7Aa3F8910ACeF21300098DA9171d06220C'; // Base Sepolia USDC
 
   // Temporary base URI (for dynamic metadata API, will update post-deploy)
   // Later, you’ll call setBaseURI("https://yourdomain.com/api/metadata")
   const TEMP_BASE_URI =
-    'https://red-raw-anteater-260.mypinata.cloud/ipfs/bafkreigtuv47oajacpcczo6isvsdu4w3edr5srxrn3xnwhh6psgxlaouzi/0.json';
+    'http://localhost:3000/api/metadata';
 
   const MANAGER_ADDRESS = deployer; // can replace with backend or multisig if needed
 

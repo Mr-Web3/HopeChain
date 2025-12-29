@@ -44,7 +44,7 @@ const viemClient = createPublicClient({
 });
 
 export function LeaderboardSection({
-  title = 'Top Hope Givers',
+  title = 'Top 5 Hope Givers',
   description = 'Recognizing our most generous donors — every USDC changes a life.',
 }: LeaderboardSectionProps) {
   const [donors, setDonors] = useState<DonorData[]>([]);
@@ -127,15 +127,23 @@ export function LeaderboardSection({
           return Number(b.totalDonated) - Number(a.totalDonated);
         });
 
-        // Set ranks
+        // Set ranks with proper tie handling
+        let currentRank = 1;
+        let previousAmount = validDonors[0]?.totalDonated;
+        
         validDonors.forEach((donor, index) => {
           if (donor) {
-            donor.rank = index + 1;
+            // If this donor's amount is different from the previous, update the rank
+            if (donor.totalDonated !== previousAmount) {
+              currentRank = index + 1;
+              previousAmount = donor.totalDonated;
+            }
+            donor.rank = currentRank;
           }
         });
 
-        // Take top 10
-        const topDonors = validDonors.slice(0, 10);
+        // Take top 5 only
+        const topDonors = validDonors.slice(0, 5);
         setDonors(topDonors);
       } catch (error) {
         console.error('Error fetching donor data:', error);
@@ -167,26 +175,24 @@ export function LeaderboardSection({
 
   if (isInitialLoading) {
     return (
-      <section aria-label='Top Hope Givers Leaderboard' className='py-16'>
+      <section aria-label='Top 5 Hope Givers Leaderboard' className='py-16'>
         <div className='max-w-6xl mx-auto px-6 sm:px-8'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl font-bold text-foreground mb-4'>{title}</h2>
             <p className='text-muted-foreground text-lg'>{description}</p>
           </div>
 
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-            {Array.from({ length: 8 }).map((_, index) => (
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6'>
+            {Array.from({ length: 5 }).map((_, index) => (
               <Card
                 key={index}
-                className='bg-gradient-to-br from-white/5 to-white/10 border border-white/20 rounded-xl p-4'
+                className='bg-gradient-to-br from-white/5 to-white/10 border border-white/20 rounded-xl p-6'
               >
                 <CardContent className='p-0'>
-                  <div className='flex items-center space-x-4'>
-                    <div className='w-12 h-12 bg-white/10 rounded-full animate-pulse'></div>
-                    <div className='flex-1'>
-                      <div className='h-4 bg-white/10 rounded animate-pulse mb-2'></div>
-                      <div className='h-6 bg-white/10 rounded animate-pulse'></div>
-                    </div>
+                  <div className='flex flex-col items-center text-center space-y-3'>
+                    <div className='w-8 h-8 bg-white/10 rounded-full animate-pulse'></div>
+                    <div className='w-20 h-6 bg-white/10 rounded animate-pulse'></div>
+                    <div className='w-16 h-4 bg-white/10 rounded animate-pulse'></div>
                   </div>
                 </CardContent>
               </Card>
@@ -199,7 +205,7 @@ export function LeaderboardSection({
 
   if (error) {
     return (
-      <section aria-label='Top Hope Givers Leaderboard' className='py-16'>
+      <section aria-label='Top 5 Hope Givers Leaderboard' className='py-16'>
         <div className='max-w-6xl mx-auto px-6 sm:px-8'>
           <div className='text-center mb-12'>
             <h2 className='text-3xl font-bold text-foreground mb-4'>{title}</h2>
@@ -242,7 +248,7 @@ export function LeaderboardSection({
             </CardContent>
           </Card>
         ) : (
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6'>
             {donors.map((donor, index) => (
               <LeaderboardCard
                 key={donor.address}

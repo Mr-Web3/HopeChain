@@ -122,7 +122,7 @@ export function HeroSection({
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className='inline-flex items-center gap-2 px-4 py-2 bg-none border border-primary/20 rounded-full text-sm font-medium text-primary mb-6'
+            className='inline-flex items-center gap-2 px-4 py-2 bg-none border border-primary/40 shadow-md shadow-primary/25 rounded-lg text-sm font-medium text-black dark:text-white mb-6'
           >
             {badge.icon && (
               <span className='w-2 h-2 bg-primary rounded-full animate-pulse' />

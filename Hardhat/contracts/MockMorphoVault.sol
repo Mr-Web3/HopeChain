@@ -27,20 +27,21 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract MockMorphoVault is ERC20, Ownable, ReentrancyGuard {
-    IERC20 public immutable asset;
-    uint256 public totalUnderlying;
+    IERC20 public immutable asset; // We are using USDC
+    uint256 public totalUnderlying; // Total underlying value
 
-    event Deposit(address indexed caller, address indexed owner, uint256 assets, uint256 shares);
-    event Withdraw(address indexed caller, address indexed receiver, uint256 assets, uint256 shares);
-    event TokensRecovered(address indexed token, uint256 amount);
-    event ETHRecovered(uint256 amount);
+    event Deposit(address indexed caller, address indexed owner, uint256 assets, uint256 shares); // Event emit when deposit is made
+    event Withdraw(address indexed caller, address indexed receiver, uint256 assets, uint256 shares); // Event emit when withdraw is made
+    event TokensRecovered(address indexed token, uint256 amount); // Event emit when tokens are recived ERC20 (USDC)
+    event ETHRecovered(uint256 amount); // Event emit when ETH is recovered from this contract
 
+    // Constructor param has one argument the assets address (USDC)
     constructor(address _asset)
         ERC20("MockMorphoVault Share", "mShare")
     {
         asset = IERC20(_asset);
     }
-
+    // Deposit function can be called by anyone, its requires the assets to be greater than 0.
     function deposit(uint256 assets, address receiver) external returns (uint256 shares) {
         require(assets > 0, "zero amount");
         asset.transferFrom(msg.sender, address(this), assets);
@@ -49,7 +50,9 @@ contract MockMorphoVault is ERC20, Ownable, ReentrancyGuard {
         totalUnderlying += assets;
         emit Deposit(msg.sender, receiver, assets, shares);
     }
-
+    // This function allows the owner of the assets & their shares to withdraw, it requires that the user withdrawing assets are greater than zero
+    // requires that the totalUnderlying asseets are greater than or equal to the assets. requires if the msg.sender to check the owner and the allowance
+    // then allowed must the greater than or equal to assets.
     function withdraw(uint256 assets, address receiver, address owner)
         external
         returns (uint256 shares)
@@ -67,15 +70,15 @@ contract MockMorphoVault is ERC20, Ownable, ReentrancyGuard {
         asset.transfer(receiver, assets);
         emit Withdraw(msg.sender, receiver, assets, shares);
     }
-
+    // This function returns the total value of the underlying assets.
     function totalAssets() external view returns (uint256) {
         return totalUnderlying;
     }
-
+    // This function will simulate the yeild and can only be called by onlyOwner
     function simulateYield(uint256 yieldAmount) external onlyOwner nonReentrant {
         totalUnderlying += yieldAmount;
     }
-
+    // This function can be called by onlyOwner cna mint mock USDC from this address and the amount adding to the overall total underlying value.
     function mintMockUSDC(uint256 amount) external onlyOwner nonReentrant {
         asset.transferFrom(msg.sender, address(this), amount);
         totalUnderlying += amount;
@@ -86,7 +89,7 @@ contract MockMorphoVault is ERC20, Ownable, ReentrancyGuard {
         IERC20(tokenAddress).transfer(owner(), amount);
         emit TokensRecovered(tokenAddress, amount);
     }
-
+    // This function can be called by onlyOwner which requires the TX to eqaul success, if the TX fails which would eqaul false the TX will revert.
     function recoverETH(uint256 amount) external onlyOwner nonReentrant {
         (bool success, ) = payable(owner()).call{value: amount}("");
         require(success, "ETH transfer failed");

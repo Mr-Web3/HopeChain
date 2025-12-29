@@ -180,6 +180,38 @@ code {
   --rk-fonts-actionButton: var(--font-geist);
 }
 
+/* Force RainbowKit action buttons to use proper dark mode styling */
+.dark [data-rk] button[data-rk] {
+  background-color: var(--rk-colors-actionButtonBackground) !important;
+  color: var(--rk-colors-actionButtonText) !important;
+  border-color: var(--rk-colors-actionButtonBorder) !important;
+}
+
+.dark [data-rk] button[data-rk]:hover {
+  background-color: var(--rk-colors-actionButtonBackgroundHover) !important;
+  color: var(--rk-colors-actionButtonTextHover) !important;
+  border-color: var(--rk-colors-actionButtonBorderHover) !important;
+}
+
+/* Specific targeting for Copy Address and Disconnect buttons */
+.dark [data-rk] button[data-rk][aria-label*="Copy"],
+.dark [data-rk] button[data-rk][aria-label*="Disconnect"],
+.dark [data-rk] button[data-rk]:has(svg[data-testid="copy-icon"]),
+.dark [data-rk] button[data-rk]:has(svg[data-testid="disconnect-icon"]) {
+  background-color: #121a33 !important;
+  color: #e7eaf3 !important;
+  border: 1px solid rgba(184, 192, 217, 0.2) !important;
+}
+
+.dark [data-rk] button[data-rk][aria-label*="Copy"]:hover,
+.dark [data-rk] button[data-rk][aria-label*="Disconnect"]:hover,
+.dark [data-rk] button[data-rk]:has(svg[data-testid="copy-icon"]):hover,
+.dark [data-rk] button[data-rk]:has(svg[data-testid="disconnect-icon"]):hover {
+  background-color: #0f1528 !important;
+  color: #e7eaf3 !important;
+  border-color: #0052ff !important;
+}
+
 @layer base {
   :root {
     /* Light mode - not used but kept for completeness */

@@ -102,7 +102,7 @@ export default function Home() {
             <FeatureCard
               step={1}
               title='Donate USDC'
-              description='Donate directly using Coinbase Pay, WalletConnect, or MetaMask'
+              description='Donate using Coinbase Pay, WalletConnect, or MetaMask'
               icon={<FaHeart />}
               gradientFrom='blue-500'
               gradientTo='purple-600'
@@ -111,7 +111,7 @@ export default function Home() {
             <FeatureCard
               step={2}
               title='Earn Yield'
-              description='Funds automatically earn interest in secure Morpho vaults'
+              description='Funds earn yield in secure Morpho vaults'
               icon={<FaChartLine />}
               gradientFrom='purple-500'
               gradientTo='pink-600'
@@ -145,7 +145,7 @@ export default function Home() {
             description='Real-time metrics showing the impact of your donations'
           />
 
-          <div className='grid grid-cols-2 md:grid-cols-5 gap-6'>
+          <div className='grid grid-cols-1 md:grid-cols-5 gap-4 md:gap-6'>
             <MetricCard
               icon={<HiOutlineCurrencyDollar />}
               title='Total Donated'
